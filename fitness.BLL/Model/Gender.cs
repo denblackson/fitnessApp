@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace fitness.BLL.Model
 {
-    //
+    ///
     /// <summary>
     /// Gender
     /// </summary>
