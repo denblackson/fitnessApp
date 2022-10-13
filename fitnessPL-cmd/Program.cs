@@ -31,6 +31,8 @@ namespace fitnessPL_cmd
             var userController = new UserController(name, gender, birthdate, height, weighte);
             userController.Save();
 
+            //
+
         }
     }
 }

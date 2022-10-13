@@ -35,7 +35,7 @@ namespace fitness.BLL.Model
         /// </summary>
         public double Height { get; set; }
         #endregion
-
+        //
         /// <summary>
         /// Create new User
         /// </summary>
