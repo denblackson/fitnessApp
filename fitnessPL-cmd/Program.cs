@@ -1,9 +1,5 @@
 ﻿using System;
 using fitness.BLL.Controller;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace fitnessPL_cmd
 {
@@ -11,28 +7,63 @@ namespace fitnessPL_cmd
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("App is launched");
+            Console.WriteLine("App is launched\n\n");
+
+
             Console.WriteLine("Enter users name");
             var name = Console.ReadLine();
 
-            Console.WriteLine("Enter your Gender");
-            var gender = Console.ReadLine();
+            var userController = new UserController(name);
+            if (userController.isNewUser)
+            {
+                Console.WriteLine("Enter your Gender");
+                var gender = Console.ReadLine();
+                DateTime birthDate = ParseDateTime();
+                var weight = ParseDouble("weight");
+                var height = ParseDouble("height");
 
-            Console.WriteLine("Enter your birth date");
-            var birthdate = DateTime.Parse(Console.ReadLine()); // TODO: tryparse
+                userController.SetNewUserData(gender, birthDate, weight, height);
+            }
 
-            Console.WriteLine("Enter your weight");
-            var weighte = double.Parse(Console.ReadLine());
+            Console.WriteLine(userController.CurrentUser);
+            Console.ReadLine();
+        }
 
-            Console.WriteLine("Enter your height");
-            var height = double.Parse(Console.ReadLine());
+        private static DateTime ParseDateTime()
+        {
+            DateTime birthDate;
+            while (true)
+            {
+                Console.WriteLine("Enter your birthday date (dd.mm.yyyy)");
+                if (DateTime.TryParse(Console.ReadLine(), out birthDate))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong birth date format!!!");
+                }
+            }
 
+            return birthDate;
+        }
 
-            var userController = new UserController(name, gender, birthdate, height, weighte);
-            userController.Save();
-
-            //
-
+        private static double ParseDouble(string name)
+        {
+            while (true)
+            {
+                Console.WriteLine($"Enter {name}");
+                if (double.TryParse(Console.ReadLine(), out double value))
+                {
+                    return value;
+                }
+                else
+                {
+                    Console.WriteLine($"Wrong name format of {name}");
+                }
+            }
         }
     }
 }
+
+// 15.02.2003

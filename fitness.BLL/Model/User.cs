@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,24 +19,46 @@ namespace fitness.BLL.Model
         /// Name
         /// </summary>
         public string Name { get; }
+
         /// <summary>
         /// Gender
         /// </summary>
-        public Gender Gender { get; }
+        public Gender Gender { get; set; }
+
         /// <summary>
         /// Birthday date
         /// </summary>
-        public DateTime BirthDate { get; }
+        public DateTime BirthDate { get; set; }
+
         /// <summary>
         /// User`s Weight
         /// </summary>
         public double Weight { get; set; }
+
         /// <summary>
         /// User`s Height
         /// </summary>
         public double Height { get; set; }
+
+        /// <summary>
+        /// User`s age
+        /// </summary>
+       
+
+        //public int Age { get { return DateTime.Now.Year - BirthDate.Year; } } // TODO: get correct age 
+        public int Age
+        {
+            get
+            {
+                DateTime nowDate = DateTime.Today;
+                int age = nowDate.Year - BirthDate.Year;
+                if (BirthDate > nowDate.AddYears(-age)) age--;
+
+                return age;
+            }
+        }
         #endregion
-        //
+
         /// <summary>
         /// Create new User
         /// </summary>
@@ -88,9 +111,18 @@ namespace fitness.BLL.Model
             Height = height;
         }
 
+        public User(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Users name cannot be empty");
+            }
+
+            Name = name;
+        }
         public override string ToString()
         {
-            return Name;
+            return Name + " " + Age;
         }
     }
 }
