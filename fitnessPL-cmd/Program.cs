@@ -66,4 +66,3 @@ namespace fitnessPL_cmd
     }
 }
 
-// 15.02.2003

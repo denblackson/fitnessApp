@@ -60,7 +60,8 @@ namespace fitness.BLL.Controller
 
             using (var filestream = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                if (formatter.Deserialize(filestream) is List<User> users)
+
+                if (filestream.Length > 0 && formatter.Deserialize(filestream) is List<User> users)
                 {
                     return users;
                 }
@@ -68,7 +69,6 @@ namespace fitness.BLL.Controller
                 {
                     return new List<User>();
                 }
-                // TODO: if user failed to read
             }
         }
 
@@ -77,8 +77,6 @@ namespace fitness.BLL.Controller
         public void SetNewUserData(string genderName, DateTime birthdate,
                                    double weight = 1, double height = 1)
         {
-            // TODO: Check entered data
-
             CurrentUser.Gender = new Gender(genderName);
             CurrentUser.BirthDate = birthdate;
             CurrentUser.Weight = weight;
