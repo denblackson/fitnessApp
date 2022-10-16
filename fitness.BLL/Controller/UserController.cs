@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,12 +13,13 @@ namespace fitness.BLL.Controller
     /// <summary>
     /// Users Controller
     /// </summary>
-    public class UserController
+    public class UserController : ControllerBase
     {
         /// <summary>
         /// App User
         /// </summary>
 
+        private const string USERS_FILE_NAME = "users.dat";
         public List<User> Users { get; }
         public User CurrentUser { get; }
 
@@ -56,20 +58,7 @@ namespace fitness.BLL.Controller
         /// <returns></returns>
         private List<User> GetUsersData()
         {
-            var formatter = new BinaryFormatter();
-
-            using (var filestream = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-
-                if (filestream.Length > 0 && formatter.Deserialize(filestream) is List<User> users)
-                {
-                    return users;
-                }
-                else
-                {
-                    return new List<User>();
-                }
-            }
+           return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();
         }
 
 
@@ -88,13 +77,7 @@ namespace fitness.BLL.Controller
         /// </summary>
         public void Save()
         {
-            var formatter = new BinaryFormatter();
-
-            using (var filestream = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(filestream, Users);
-
-            }
+            Save(USERS_FILE_NAME, Users);
         }
 
     }
