@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Resources;
 using System.Xml.Linq;
 using fitness.BLL.Controller;
 using fitness.BLL.Model;
@@ -9,19 +11,28 @@ namespace fitnessPL_cmd
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("App is launched\n\n");
+            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            //var culture = CultureInfo.CreateSpecificCulture("ru-RU");
+            //var culture = CultureInfo.CreateSpecificCulture("uk-UA");
 
-            Console.WriteLine("Enter your name");
+
+            var resourceManager = new ResourceManager("fitnessPL_cmd.Languages.Messages", typeof(Program).Assembly);
+
+
+
+            Console.WriteLine(resourceManager.GetString("Launched",culture));
+
+            Console.WriteLine(resourceManager.GetString("EnterName",culture));
             var name = Console.ReadLine();
 
             var userController = new UserController(name);
             var eatingController = new EatingController(userController.CurrentUser);
             if (userController.isNewUser)
             {
-                Console.WriteLine("Enter your Gender: ");
+                Console.WriteLine(resourceManager.GetString("EnterGender",culture));
                 var gender = Console.ReadLine();
                 var birthDate = ParseDateTime();
-                var usersWeight = ParseDouble("wour weight ");
+                var usersWeight = ParseDouble("your weight ");
                 var usersHeight = ParseDouble("your height");
 
                 userController.SetNewUserData(gender, birthDate, usersWeight, usersHeight);
@@ -30,8 +41,8 @@ namespace fitnessPL_cmd
 
             Console.WriteLine(userController.CurrentUser);
 
-            Console.WriteLine("What do u want?");
-            Console.WriteLine("E - enter new meal");
+            Console.WriteLine(resourceManager.GetString("WhatDoUWant?", culture));
+            Console.WriteLine(resourceManager.GetString("E-EnterNewMeal",culture));
             var key = Console.ReadKey();
             Console.WriteLine();
 
@@ -89,6 +100,7 @@ namespace fitnessPL_cmd
         {
             while (true)
             {
+                Console.WriteLine($"Enter {name}: ");
                 Console.WriteLine($"Enter {name}: ");
                 if (double.TryParse(Console.ReadLine(), out double value))
                 {
