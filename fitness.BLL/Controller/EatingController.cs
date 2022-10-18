@@ -14,37 +14,17 @@ namespace fitness.BLL.Controller
     {
         private const string FOODS_FILE_NAME = "foods.dat";
         private const string EATINGS_FILE_NAME = "eatings.dat";
+
         private readonly User user;
         public List<Food> Foods { get; }
-        /// <summary>
-        /// прийом їжі
-        /// </summary>
         public Eating Eating { get; }
 
 
         public EatingController(User user)
         {
-            this.user = user ?? throw new ArgumentNullException("User cannot be null", nameof(user));
+            this.user = user ?? throw new ArgumentNullException("User cannt be null.", nameof(user));
             Foods = GetAllFoods();
-            Eating = GetEatings();
-        }
-
-
-
-       
-
-
-        // create meal for User, add different prod. => Save()
-        public bool Add(string foodName, double weight)
-        {
-            var food = Foods.SingleOrDefault(f => f.Name == foodName);
-            if (food != null)
-            {
-                Eating.Add(food, weight);
-                Save();
-                return true; // if this product has been there allready
-            }
-            return false; // create new product method
+            Eating = GetEating();
         }
 
         public void Add(Food food, double weight)
@@ -59,10 +39,11 @@ namespace fitness.BLL.Controller
             else
             {
                 Eating.Add(product, weight);
-                Save(); 
+                Save();
             }
         }
-        private Eating GetEatings()
+
+        private Eating GetEating()
         {
             return Load<Eating>(EATINGS_FILE_NAME) ?? new Eating(user);
         }
@@ -77,6 +58,5 @@ namespace fitness.BLL.Controller
             Save(FOODS_FILE_NAME, Foods);
             Save(EATINGS_FILE_NAME, Eating);
         }
-
     }
 }

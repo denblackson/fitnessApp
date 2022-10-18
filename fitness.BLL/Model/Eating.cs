@@ -9,6 +9,7 @@ namespace fitness.BLL.Model
     /// <summary>
     /// eating meal
     /// </summary>
+     [Serializable]
     public class Eating
     {
         /// <summary>

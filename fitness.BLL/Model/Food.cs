@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace fitness.BLL.Model
 {
+    [Serializable]
     public class Food
     {
         public string Name { get; set; }

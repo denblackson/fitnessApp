@@ -40,7 +40,6 @@ namespace fitness.BLL.Controller
                 {
                     return default(T);
                 }
-
             }
         }
     }
