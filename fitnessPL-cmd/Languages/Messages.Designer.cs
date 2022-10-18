@@ -61,6 +61,15 @@ namespace fitnessPL_cmd.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A - Enter new exercise.
+        /// </summary>
+        internal static string A_EnterNewExercise {
+            get {
+                return ResourceManager.GetString("A-EnterNewExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E - enter new meal.
         /// </summary>
         internal static string E_EnterNewMeal {
@@ -93,6 +102,15 @@ namespace fitnessPL_cmd.Languages {
         internal static string Launched {
             get {
                 return ResourceManager.GetString("Launched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Q - Exit.
+        /// </summary>
+        internal static string Q_Exit {
+            get {
+                return ResourceManager.GetString("Q-Exit", resourceCulture);
             }
         }
         

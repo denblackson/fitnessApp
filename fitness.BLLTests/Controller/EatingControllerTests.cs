@@ -17,7 +17,7 @@ namespace fitness.BLL.Controller.Tests
 
             // Arrange
             var userName = Guid.NewGuid().ToString();
-            var foodName  = Guid.NewGuid().ToString();
+            var foodName = Guid.NewGuid().ToString();
             var rnd = new Random();
             var userController = new UserController(userName);
             var eatingController = new EatingController(userController.CurrentUser);
@@ -25,7 +25,7 @@ namespace fitness.BLL.Controller.Tests
             // Act
             eatingController.Add(food, 100);
             //Assert
-           // Assert.AreEqual(food.Name,eatingController.Eating.Foods.First().Key.Name);
+            Assert.AreEqual(food.Name, eatingController.Eating.Foods.First().Key.Name);
         }
     }
 }

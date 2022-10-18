@@ -20,44 +20,82 @@ namespace fitnessPL_cmd
 
 
 
-            Console.WriteLine(resourceManager.GetString("Launched",culture));
+            Console.WriteLine(resourceManager.GetString("Launched", culture));
 
-            Console.WriteLine(resourceManager.GetString("EnterName",culture));
+            Console.WriteLine(resourceManager.GetString("EnterName", culture));
             var name = Console.ReadLine();
 
             var userController = new UserController(name);
             var eatingController = new EatingController(userController.CurrentUser);
+            var exerciseController = new ExerciseController(userController.CurrentUser);
+
             if (userController.isNewUser)
             {
-                Console.WriteLine(resourceManager.GetString("EnterGender",culture));
+                Console.WriteLine(resourceManager.GetString("EnterGender", culture));
                 var gender = Console.ReadLine();
-                var birthDate = ParseDateTime();
+                var birthDate = ParseDateTime("birthday date ");
                 var usersWeight = ParseDouble("your weight ");
                 var usersHeight = ParseDouble("your height");
 
                 userController.SetNewUserData(gender, birthDate, usersWeight, usersHeight);
             }
-
-
             Console.WriteLine(userController.CurrentUser);
 
-            Console.WriteLine(resourceManager.GetString("WhatDoUWant?", culture));
-            Console.WriteLine(resourceManager.GetString("E-EnterNewMeal",culture));
-            var key = Console.ReadKey();
-            Console.WriteLine();
 
-            if (key.Key == ConsoleKey.E)
+
+
+            while (true)
             {
-                var foods = EnterEating();
-                eatingController.Add(foods.Food, foods.Weight);
+                Console.WriteLine(resourceManager.GetString("WhatDoUWant?", culture));
+                Console.WriteLine(resourceManager.GetString("E-EnterNewMeal", culture));
+                Console.WriteLine(resourceManager.GetString("A-EnterNewExercise", culture));
+                Console.WriteLine(resourceManager.GetString("Q-Exit", culture));
+                var key = Console.ReadKey();
+                Console.WriteLine();
 
-                foreach (var item in eatingController.Eating.Foods)
+                switch (key.Key)
                 {
-                    Console.WriteLine($"\t{item.Key} - {item.Value}");
-                }
-            }
+                    case ConsoleKey.E:
+                        var foods = EnterEating();
+                        eatingController.Add(foods.Food, foods.Weight);
 
-            Console.ReadLine();
+                        foreach (var item in eatingController.Eating.Foods)
+                        {
+                            Console.WriteLine($"\t{item.Key} - {item.Value}");
+                        }
+                        break;
+                    case ConsoleKey.A:
+                        var exer = EnterExercise();
+                        //var exercise = new Exercise(exer.Begin,exer.End, exer.Activity, userController.CurrentUser);
+                        exerciseController.Add(exer.Activity, exer.Begin, exer.End);
+
+                        foreach (var item in exerciseController.Exercises)
+                        {
+                            Console.WriteLine($"\t{item.Activity} since {item.Start.ToShortTimeString()} to {item.Finish.ToShortTimeString()}");
+                        }
+                        break;
+                    case ConsoleKey.Q:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        break;
+                }
+                Console.ReadLine();
+            }
+        }
+
+        private static (DateTime Begin, DateTime End, Activity Activity) EnterExercise()
+        {
+            Console.WriteLine("Enter the name of exercise: ");
+            var name = Console.ReadLine();
+
+            var energy = ParseDouble("energy consumption per min");
+
+            var begin = ParseDateTime("Start");
+            var end = ParseDateTime("finish");
+
+            var activity = new Activity(name, energy);
+            return (begin, end, activity);
         }
 
         private static (Food Food, double Weight) EnterEating()
@@ -77,19 +115,19 @@ namespace fitnessPL_cmd
             return (Food: product, Weight: weight);
         }
 
-        private static DateTime ParseDateTime()
+        private static DateTime ParseDateTime(string value)
         {
             DateTime birthDate;
             while (true)
             {
-                Console.WriteLine("Enter your birthday date (dd.mm.yyyy): ");
+                Console.WriteLine($"Enter {value} (dd.mm.yyyy): ");
                 if (DateTime.TryParse(Console.ReadLine(), out birthDate))
                 {
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Wrong birth date format!!!");
+                    Console.WriteLine($"Wrong {value} format!!!");
                 }
             }
 
