@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,25 +16,55 @@ namespace fitness.BLL.Controller
         private const string EATINGS_FILE_NAME = "eatings.dat";
         private readonly User user;
         public List<Food> Foods { get; }
-        public Eating Eatings { get; }
+        /// <summary>
+        /// прийом їжі
+        /// </summary>
+        public Eating Eating { get; }
 
 
         public EatingController(User user)
         {
             this.user = user ?? throw new ArgumentNullException("User cannot be null", nameof(user));
             Foods = GetAllFoods();
-            Eatings = GetAllEatings();
+            Eating = GetEatings();
         }
 
+
+
+       
+
+
+        // create meal for User, add different prod. => Save()
         public bool Add(string foodName, double weight)
         {
             var food = Foods.SingleOrDefault(f => f.Name == foodName);
-            
+            if (food != null)
+            {
+                Eating.Add(food, weight);
+                Save();
+                return true; // if this product has been there allready
+            }
+            return false; // create new product method
         }
 
-        private List<Eating> GetAllEatings()
+        public void Add(Food food, double weight)
         {
-            return Load<List<Eating>>(EATINGS_FILE_NAME) ?? new List<Eating>();
+            var product = Foods.SingleOrDefault(f => f.Name == food.Name);
+            if (product == null)
+            {
+                Foods.Add(food);
+                Eating.Add(food, weight);
+                Save();
+            }
+            else
+            {
+                Eating.Add(product, weight);
+                Save(); 
+            }
+        }
+        private Eating GetEatings()
+        {
+            return Load<Eating>(EATINGS_FILE_NAME) ?? new Eating(user);
         }
 
         private List<Food> GetAllFoods()
@@ -44,7 +75,7 @@ namespace fitness.BLL.Controller
         private void Save()
         {
             Save(FOODS_FILE_NAME, Foods);
-            Save(EATINGS_FILE_NAME, Eatings);
+            Save(EATINGS_FILE_NAME, Eating);
         }
 
     }
