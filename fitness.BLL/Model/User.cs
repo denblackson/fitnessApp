@@ -15,10 +15,12 @@ namespace fitness.BLL.Model
     public class User
     {
         #region  Users Properties
+        public int Id { get; set; }
+
         /// <summary>
         /// Name
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set;  }
 
         /// <summary>
         /// Gender

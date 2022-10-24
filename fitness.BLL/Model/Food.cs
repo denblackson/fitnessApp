@@ -9,27 +9,29 @@ namespace fitness.BLL.Model
     [Serializable]
     public class Food
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
         /// <summary>
         /// Proteins
         /// </summary>
 
-        public double Proteins { get; }
+        public double Proteins { get; set; }
         /// <summary>
         /// Fats
         /// </summary>
 
-        public double Fats { get; }
+        public double Fats { get; set; }
         /// <summary>
         /// Carbohydrates
         /// </summary>
 
-        public double Carbohydrates { get; }
+        public double Carbohydrates { get; set;  }
 
         /// <summary>
         /// Calories per 100 gramm
         /// </summary>івфів
-        public double Calories { get; }
+        public double Calories { get; set;  }
 
 
 

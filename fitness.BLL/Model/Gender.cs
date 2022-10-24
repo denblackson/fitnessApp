@@ -19,6 +19,7 @@ namespace fitness.BLL.Model
         /// Gender`s title
         /// </summary>
         public string Name { get; set; }
+        public int Id { get; set; }
 
 
         /// <summary>

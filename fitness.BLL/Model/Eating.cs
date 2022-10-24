@@ -12,10 +12,13 @@ namespace fitness.BLL.Model
      [Serializable]
     public class Eating
     {
+
+        public int Id { get; set; }
+
         /// <summary>
         /// час прийому їди
         /// </summary>
-        public DateTime Moment { get; }
+        public DateTime Moment { get; set; }
 
         /// <summary>
         /// Eaten kinds of food
@@ -23,9 +26,10 @@ namespace fitness.BLL.Model
         /// Dictionary<Food, double>    <Foodtype,quantity >
         /// 
         /// </summary>
-        public Dictionary<Food, double> Foods { get; }
+        public Dictionary<Food, double> Foods { get; set; }
 
-        public User User { get; }
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
 
 
         public Eating(User user)

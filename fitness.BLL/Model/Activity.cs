@@ -9,10 +9,10 @@ namespace fitness.BLL.Model
     [Serializable]
     public class Activity
     {
-        
+        public int Id { get; set; }
 
-        public string Name { get;  }
-        public double CaloriesPerMinute { get; }
+        public string Name { get; set; }
+        public double CaloriesPerMinute { get; set; }
         public Activity(string name, double caloriesPerMinute)
         {
             // checks
@@ -20,7 +20,7 @@ namespace fitness.BLL.Model
             Name = name;
             CaloriesPerMinute = caloriesPerMinute;
         }
-
+                
         public override string ToString()
         {
             return Name;

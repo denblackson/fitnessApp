@@ -14,33 +14,20 @@ namespace fitness.BLL.Controller
         /// <summary>
         /// Save Users data
         /// </summary>
+        /// 
+
+        protected IDataSaver _dataSaver = new  SerializeDataSever();
+
+
         protected void Save(string fileName, object item)
         {
-            var formatter = new BinaryFormatter();
-
-            using (var filestream = new FileStream(fileName, FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(filestream, item);
-
-            }
+           _dataSaver.Save(fileName, item);
         }
 
 
         protected T Load<T>(string fileName)
         {
-            var formatter = new BinaryFormatter();
-
-            using (var filestream = new FileStream(fileName, FileMode.OpenOrCreate))
-            {
-                if (filestream.Length > 0 && formatter.Deserialize(filestream) is T items)
-                {
-                    return items;
-                }
-                else
-                {
-                    return default(T);
-                }
-            }
+            return _dataSaver.Load<T>(fileName);
         }
     }
 }
