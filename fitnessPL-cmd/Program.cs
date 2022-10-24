@@ -29,7 +29,7 @@ namespace fitnessPL_cmd
             var eatingController = new EatingController(userController.CurrentUser);
             var exerciseController = new ExerciseController(userController.CurrentUser);
 
-            if (userController.isNewUser)
+            if (userController.IsNewUser)
             {
                 Console.WriteLine(resourceManager.GetString("EnterGender", culture));
                 var gender = Console.ReadLine();

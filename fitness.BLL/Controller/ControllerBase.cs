@@ -1,33 +1,21 @@
-﻿using fitness.BLL.Model;
-using System;
+﻿using fitness.BLL.Controller;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace fitness.BLL.Controller
 {
     public abstract class ControllerBase
     {
-        /// <summary>
-        /// Save Users data
-        /// </summary>
-        /// 
+        private readonly IDataSaver manager = new DatabaseSaver();
 
-        protected IDataSaver _dataSaver = new  SerializeDataSever();
-
-
-        protected void Save(string fileName, object item)
+        protected void Save<T>(List<T> item) where T : class
         {
-           _dataSaver.Save(fileName, item);
+            manager.Save(item);
         }
 
-
-        protected T Load<T>(string fileName)
+        protected List<T> Load<T>() where T : class
         {
-            return _dataSaver.Load<T>(fileName);
+            return manager.Load<T>();
         }
     }
 }

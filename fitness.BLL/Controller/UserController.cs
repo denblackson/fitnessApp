@@ -13,44 +13,40 @@ namespace fitness.BLL.Controller
     /// <summary>
     /// Users Controller
     /// </summary>
+   
     public class UserController : ControllerBase
     {
         /// <summary>
-        /// App User
+        /// Пользователь приложения.
         /// </summary>
-
-        private const string USERS_FILE_NAME = "users.dat";
         public List<User> Users { get; }
+
         public User CurrentUser { get; }
 
-        public bool isNewUser { get; } = false;
-
+        public bool IsNewUser { get; } = false;
 
         /// <summary>
-        /// Creation of new User controller
+        /// Create new users controller
         /// </summary>
-        /// <param name="user">Users name</param>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="user"></param>
         public UserController(string userName)
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
-                throw new ArgumentNullException("Users name cannot be empty", nameof(userName));
+                throw new ArgumentNullException("Users name cannot be null", nameof(userName));
             }
 
             Users = GetUsersData();
 
-            CurrentUser = Users.SingleOrDefault(u => u.Name == userName); // return null if failed to find user
+            CurrentUser = Users.SingleOrDefault(u => u.Name == userName);
 
             if (CurrentUser == null)
             {
                 CurrentUser = new User(userName);
                 Users.Add(CurrentUser);
-                isNewUser = true;
-                Save();
+                IsNewUser = true;
             }
         }
-
 
         /// <summary>
         /// Get saved users List
@@ -58,27 +54,27 @@ namespace fitness.BLL.Controller
         /// <returns></returns>
         private List<User> GetUsersData()
         {
-           return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();
+            return Load<User>() ?? new List<User>();
         }
 
 
-
-        public void SetNewUserData(string genderName, DateTime birthdate,
-                                   double weight = 1, double height = 1)
+        public void SetNewUserData(string genderName, DateTime birthDate, double weight = 1, double height = 1)
         {
+            // Checks
+
             CurrentUser.Gender = new Gender(genderName);
-            CurrentUser.BirthDate = birthdate;
+            CurrentUser.BirthDate = birthDate;
             CurrentUser.Weight = weight;
             CurrentUser.Height = height;
             Save();
         }
+
         /// <summary>
-        /// Save Users data
+        /// Save users data
         /// </summary>
         public void Save()
         {
-            Save(USERS_FILE_NAME, Users);
+            Save(Users);
         }
-
     }
 }
