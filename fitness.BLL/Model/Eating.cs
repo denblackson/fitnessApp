@@ -39,6 +39,11 @@ namespace fitness.BLL.Model
             Moment = DateTime.UtcNow;
             Foods = new Dictionary<Food, double>();
         }
+
+        public Eating()
+        {
+                
+        }
         /// <summary>
         /// Add one meal
         /// </summary>

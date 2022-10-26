@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using fitness.BLL.Controller;
 using fitness.BLL.Model;
 
+
 namespace fitnessPL_cmd
 {
     class Program
@@ -32,6 +33,7 @@ namespace fitnessPL_cmd
             if (userController.IsNewUser)
             {
                 Console.WriteLine(resourceManager.GetString("EnterGender", culture));
+                Console.WriteLine("EnterGender");
                 var gender = Console.ReadLine();
                 var birthDate = ParseDateTime("birthday date ");
                 var usersWeight = ParseDouble("your weight ");

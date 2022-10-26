@@ -50,7 +50,12 @@ namespace fitness.BLL.Model
 
 
 
+
         public Food(string name) : this(name, 0, 0, 0, 0) { }
+        public Food()
+        {
+
+        }
 
 
         public override string ToString()

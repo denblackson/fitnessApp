@@ -9,7 +9,7 @@ namespace fitness.BLL.Controller
         public List<T> Load<T>() where T : class
         {
             var formatter = new BinaryFormatter();
-            var fileName = typeof(T).Name;
+            var fileName = typeof(T).Name;    // auto detecting fileName
 
             using (var fs = new FileStream(fileName, FileMode.OpenOrCreate))
             {

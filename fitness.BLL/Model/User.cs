@@ -122,6 +122,10 @@ namespace fitness.BLL.Model
 
             Name = name;
         }
+        public User()
+        {
+
+        }
         public override string ToString()
         {
             return Name + " " + Age;

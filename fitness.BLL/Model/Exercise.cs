@@ -26,7 +26,10 @@ namespace fitness.BLL.Model
             Activity = activity;
             User = user;
         }
+        public Exercise()
+        {
 
+        }
 
     }
 }
